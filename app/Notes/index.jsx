@@ -1,13 +1,8 @@
+import AddNoteModal from "@/components/AddNoteModal";
+import NoteList from "@/components/NoteList";
+
 import { useState } from "react";
-import {
-  FlatList,
-  Modal,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const NoteScreen = () => {
   const [notes, setNotes] = useState([
@@ -21,30 +16,23 @@ const NoteScreen = () => {
 
   //   adding an note
 
-const addNote = () => {
-  if (newNote.trim() === "") return;
+  const addNote = () => {
+    if (newNote.trim() === "") return;
 
-  setNotes((prevNotes) => [
-    ...prevNotes,
-    { id: Date.now().toString(), text: newNote.trim() }, // Call Date.now() and trim input
-  ]);
+    setNotes((prevNotes) => [
+      ...prevNotes,
+      { id: Date.now().toString(), text: newNote.trim() }, // Call Date.now() and trim input
+    ]);
 
-  setNewNote("");
-  setModalVisible(false);
-};
-
+    setNewNote("");
+    setModalVisible(false);
+  };
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={notes}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.noteItem}>
-            <Text style={styles.noteText}>{item.text}</Text>
-          </View>
-        )}
-      />
+      {/* Note Itesm  */}
+
+      <NoteList notes={notes} />
 
       <TouchableOpacity
         style={styles.addButton}
@@ -54,7 +42,14 @@ const addNote = () => {
       </TouchableOpacity>
 
       {/* Modal */}
-      <Modal
+      <AddNoteModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        newNote={newNote}
+        setNewNote={setNewNote}
+        addNote={addNote}
+      />
+      {/* <Modal
         visible={modalVisible}
         animationType="slide"
         transparent
@@ -86,7 +81,7 @@ const addNote = () => {
             </View>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 };
@@ -121,57 +116,57 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 10,
-    width: "80%",
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 10,
-    fontSize: 16,
-    marginBottom: 15,
-  },
-  modalButtons: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  cancelButton: {
-    backgroundColor: "#ccc",
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 10,
-    alignItems: "center",
-  },
-  cancelButtonText: {
-    color: "#fff",
-  },
-  saveButton: {
-    backgroundColor: "#007bff",
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    alignItems: "center",
-  },
-  saveButtonText: {
-    color: "#fff",
-  },
+  // modalOverlay: {
+  //   flex: 1,
+  //   backgroundColor: "rgba(0,0,0,0.5)",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
+  // modalContent: {
+  //   backgroundColor: "#fff",
+  //   padding: 20,
+  //   borderRadius: 10,
+  //   width: "80%",
+  // },
+  // modalTitle: {
+  //   fontSize: 20,
+  //   fontWeight: "bold",
+  //   marginBottom: 10,
+  //   textAlign: "center",
+  // },
+  // input: {
+  //   borderWidth: 1,
+  //   borderColor: "#ccc",
+  //   borderRadius: 8,
+  //   padding: 10,
+  //   fontSize: 16,
+  //   marginBottom: 15,
+  // },
+  // modalButtons: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  // },
+  // cancelButton: {
+  //   backgroundColor: "#ccc",
+  //   padding: 10,
+  //   borderRadius: 5,
+  //   flex: 1,
+  //   marginRight: 10,
+  //   alignItems: "center",
+  // },
+  // cancelButtonText: {
+  //   color: "#fff",
+  // },
+  // saveButton: {
+  //   backgroundColor: "#007bff",
+  //   padding: 10,
+  //   borderRadius: 5,
+  //   flex: 1,
+  //   alignItems: "center",
+  // },
+  // saveButtonText: {
+  //   color: "#fff",
+  // },
 });
 
 export default NoteScreen;
